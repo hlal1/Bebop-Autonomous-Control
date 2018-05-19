@@ -1,0 +1,9 @@
+<launch>
+
+    <group ns="quad_1">
+        <node pkg="my_drone" type="my_drone_flattrim" name="Flattrim" output="screen"/>
+        <node name="rqt_image_view" pkg="rqt_image_view" type="rqt_image_view" respawn="false" output="screen" args="image:=/bebop/image_raw _autosize:=false"/>
+        <node pkg="my_drone" type="my_drone_camcontrol" name="CamControl" output="screen"/>
+    </group>
+
+</launch>

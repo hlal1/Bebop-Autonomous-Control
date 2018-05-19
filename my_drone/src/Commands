@@ -1,0 +1,46 @@
+Bebop Driver:
+rosrun bebop_driver bebop_driver_node
+(or)
+roslaunch bebop_driver bebop_node.launch
+(or)
+roslaunch bebop_driver bebop_nodelet.launch
+(or)
+roslaunch bebop_tools bebop_nodelet_iv.launch
+
+Emergency:
+rostopic pub -1 /bebop/reset std_msgs/Empty
+
+Flattrim:
+rostopic pub -1 /bebop/flattrim std_msgs/Empty
+
+Camera control:(Downward Facing)
+rostopic pub -1 /bebop/camera_control geometry_msgs/Twist -- ['0','0','0'] ['0','-80','0']
+
+Toggle Video Recording:
+rostopic pub -1 /bebop/record std_msgs/Bool true
+
+Set camera exposure:(Range:[-3.0 3.0])
+rostopic pub -1 /bebop/set_exposure std_msgs/Float32 -3.0
+
+Takeoff:
+rosrun my_drone my_drone_takeoff
+
+Altitude:
+rosrun my_drone my_drone_altitude
+
+Land:
+rosrun my_drone my_drone_land
+
+Position:
+rosrun my_drone my_drone_position
+
+Video feed:
+rosrun rqt_image_view rqt_image_view image:=/bebop/image_raw _autosize:=false
+
+Capture and store image:
+rosrun image_view image_saver image:=/bebop/image_raw _save_all_image:=false _filename_format:="/home/Drone_Images/Frame.jpg" __name:=image_saver
+
+rosservice call /image_saver/save
+
+Get Odometry data:
+rostopic echo /bebop/odom

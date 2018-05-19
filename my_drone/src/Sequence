@@ -1,0 +1,25 @@
+Emergency reset:                    // Run before every flight.
+rostopic pub -1 /bebop/reset std_msgs/Empty
+
+Initial sequence:                   // Required to do initial checks, turn on cam and toggle it.
+roslaunch my_drone initial.launch
+
+Turn video recording on:            // For on-board video recording.
+rostopic pub -1 /bebop/record std_msgs/Bool true
+
+Capture and store image:            // Run image_saver node. Save image using the rosservice call at each point.
+rosrun image_view image_saver image:=/bebop/image_raw _save_all_image:=false _filename_format:="/catkin_ws/Drone_data/Frame.jpg" __name:=image_saver
+
+rosservice call /image_saver/save
+
+Takeoff:
+rosrun my_drone my_drone_takeoff
+
+Altitude:                           // To go upto altitude 3.0m.
+rosrun my_drone my_drone_altitude
+
+Position:                           // Gets position from .csv file in catkin workspace. Used for sending the drone to a defined position.
+rosrun my_drone my_drone_position
+
+Land:
+rosrun my_drone my_drone_land
